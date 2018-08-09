@@ -11,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import com.example.administrator.wanandroid.mvp.mine.MineFragment;
 import com.example.administrator.wanandroid.mvp.category.CategoryFragment;
@@ -149,4 +148,24 @@ public class MainActivity extends AppCompatActivity {
         mBottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt(KEY_BOTTOM_NAVIGATION_VIEW_SELECTED_ID, mBottomNavigationView.getSelectedItemId());
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        if (mTimelineFragment.isAdded()) {
+            fragmentManager.putFragment(outState, TimelineFragment.class.getSimpleName(), mTimelineFragment);
+        }
+
+        if (mCategoryFragment.isAdded()) {
+            fragmentManager.putFragment(outState, CategoryFragment.class.getSimpleName(), mCategoryFragment);
+        }
+
+        if (mMineFragment.isAdded()) {
+            fragmentManager.putFragment(outState, MineFragment.class.getSimpleName(), mMineFragment);
+        }
+
+        super.onSaveInstanceState(outState);
+    }
 }
